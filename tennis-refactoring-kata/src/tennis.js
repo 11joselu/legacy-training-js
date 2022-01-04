@@ -22,7 +22,7 @@ function getScore(m_score1, m_score2) {
     return score;
   }
 
-  if (m_score1 >= 4 || m_score2 >= 4) {
+  if (playerWonsAllPoints(m_score1) || playerWonsAllPoints(m_score2)) {
     var minusResult = m_score1 - m_score2;
     if (minusResult === 1) {
       score = 'Advantage player1';
@@ -64,6 +64,10 @@ function getScore(m_score1, m_score2) {
   }
 
   return score;
+}
+
+function playerWonsAllPoints(score) {
+  return score >= 4;
 }
 
 module.exports = getScore;
