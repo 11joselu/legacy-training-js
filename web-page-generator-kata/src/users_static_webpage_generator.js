@@ -88,6 +88,7 @@ function createUserInfoBlock(user) {
     </h1>
 
     ${createUserLocalizationBlock(userBiography)}
+    ${createUserCommunityManagerRole(userBiography)}
 
     <p class="lead">${userBiography}</p>
   `;
@@ -145,6 +146,27 @@ function createUserLocalizationBlock(userBiography) {
 
   return `
     <span class="badge badge-pill badge-info">${userLocalization}</span>
+  `;
+}
+
+function createUserCommunityManagerRole(userBiography) {
+  const roles = ['Community manager'];
+  let userRole = '';
+
+  for (let index = 0; index < roles.length; index++) {
+    const role = roles[index];
+    const lowercasedRole = role.toLoweCase();
+
+    if (userBiography.includes(lowercasedRole)) {
+      userRole = role;
+      break;
+    }
+  }
+
+  if (!userRole) return '';
+
+  return `
+     <span class="badge badge-pill badge-danger">${userRole}</span>
   `;
 }
 
