@@ -11,7 +11,7 @@ function getScore(m_score1, m_score2) {
     return score + '-All';
   }
 
-  if (playerScoreAllPoints(m_score1) || playerScoreAllPoints(m_score2)) {
+  if (anyPlayeScoreAllPoint(m_score1, m_score2)) {
     var minusResult = m_score1 - m_score2;
 
     if (minusResult === 1) {
@@ -36,14 +36,6 @@ function isDeuce(m_score1, m_score2) {
   return playersHasSamePoints(m_score1, m_score2) && m_score1 >= 3;
 }
 
-function playersHasSamePoints(player1Score, player2Score) {
-  return player1Score === player2Score;
-}
-
-function playerScoreAllPoints(score) {
-  return score >= 4;
-}
-
 function getScoreByPoints(score) {
   var scores = {
     0: 'Love',
@@ -53,6 +45,18 @@ function getScoreByPoints(score) {
   };
 
   return scores[score];
+}
+
+function playersHasSamePoints(player1Score, player2Score) {
+  return player1Score === player2Score;
+}
+
+function anyPlayeScoreAllPoint(m_score1, m_score2) {
+  return playerScoreAllPoints(m_score1) || playerScoreAllPoints(m_score2);
+}
+
+function playerScoreAllPoints(score) {
+  return score >= 4;
 }
 
 module.exports = getScore;
