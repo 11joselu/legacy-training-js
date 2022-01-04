@@ -78,8 +78,20 @@ class UsersStaticWebpageGenerator {
 }
 
 function createUserInfoBlock(writeln, user) {
-  writeln(`<h1 class=\"cover-heading\">${user.getName()}</h1>`);
-  writeln(`<p class=\"lead\">${user.getBiography()}</p>`);
+  writeln(`
+    <h1 class="cover-heading">
+      ${user.getName()}
+      ${createScoreButtons(user.getBiography())}
+    </h1>
+  `);
+  writeln(`<p class="lead">${user.getBiography()}</p>`);
+}
+
+function createScoreButtons(userBiography) {
+  return `<button type="button" class="btn btn-warning">
+    Score <span class="badge badge-light">N</span>
+    <span class="sr-only">keywords found</span>
+  </button>`;
 }
 
 function createWriteln(stream) {
