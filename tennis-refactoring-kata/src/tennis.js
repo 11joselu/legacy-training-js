@@ -43,18 +43,9 @@ function getScore(m_score1, m_score2) {
     3: 'Forty',
   };
 
-  for (var i = 0; i <= 1; i++) {
-    var tempScore = 0;
-
-    if (i === 0) {
-      tempScore = m_score1;
-    } else {
-      score += '-';
-      tempScore = m_score2;
-    }
-
-    score += scores[tempScore];
-  }
+  score += scores[m_score1];
+  score += '-';
+  score += scores[m_score2];
 
   return score;
 }
