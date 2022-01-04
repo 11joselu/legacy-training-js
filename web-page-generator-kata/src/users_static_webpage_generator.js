@@ -43,7 +43,8 @@ class UsersStaticWebpageGenerator {
 
     writeln('<main role="main" class="inner cover">');
     users.forEach((user) => {
-      createUserInfoBlock(writeln, user);
+      const userInfoBlockContent = createUserInfoBlock(user);
+      writeln(userInfoBlockContent);
     });
     writeln('</main>');
 
@@ -77,16 +78,17 @@ class UsersStaticWebpageGenerator {
   }
 }
 
-function createUserInfoBlock(writeln, user) {
+function createUserInfoBlock(user) {
   const userBiography = user.getBiography();
 
-  writeln(`
+  return `
     <h1 class="cover-heading">
       ${user.getName()}
       ${createScoreButtons(userBiography)}
     </h1>
-  `);
-  writeln(`<p class="lead">${userBiography}</p>`);
+
+    <p class="lead">${userBiography}</p>
+  `;
 }
 
 function createScoreButtons(userBiography) {
