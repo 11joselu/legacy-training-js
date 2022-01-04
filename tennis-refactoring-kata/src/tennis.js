@@ -1,7 +1,7 @@
 'use strict';
 
 function getScore(m_score1, m_score2) {
-  if (m_score1 === m_score2) {
+  if (playersHasSamePoints(m_score1, m_score2)) {
     if (m_score1 === 0) {
       return 'Love-All';
     }
@@ -61,6 +61,10 @@ function getScore(m_score1, m_score2) {
   }
 
   return score;
+}
+
+function playersHasSamePoints(player1Score, player2Score) {
+  return player1Score === player2Score;
 }
 
 function playerWonsAllPoints(score) {
