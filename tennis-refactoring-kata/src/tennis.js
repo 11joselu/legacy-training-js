@@ -35,15 +35,14 @@ function getScore(m_score1, m_score2) {
     return 'Win for player2';
   }
 
-  var score = '';
   var scores = {
     0: 'Love',
     1: 'Fifteen',
     2: 'Thirty',
     3: 'Forty',
   };
+  var score = scores[m_score1];
 
-  score += scores[m_score1];
   score += '-';
   score += scores[m_score2];
 
