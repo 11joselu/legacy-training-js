@@ -18,7 +18,7 @@ function getScore(m_score1, m_score2) {
     return score + '-All';
   }
 
-  if (playerWonsAllPoints(m_score1) || playerWonsAllPoints(m_score2)) {
+  if (playerScoreAllPoints(m_score1) || playerScoreAllPoints(m_score2)) {
     var minusResult = m_score1 - m_score2;
 
     if (minusResult === 1) {
@@ -52,7 +52,7 @@ function playersHasSamePoints(player1Score, player2Score) {
   return player1Score === player2Score;
 }
 
-function playerWonsAllPoints(score) {
+function playerScoreAllPoints(score) {
   return score >= 4;
 }
 
