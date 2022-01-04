@@ -105,16 +105,15 @@ function createScoreButtons(userBiography) {
     'social',
   ];
   const userBiographyWords = userBiography.split(' ');
-  let score = 0;
-
-  userBiographyWords.forEach((word) => {
+  const filteredUserBiographyWords = userBiographyWords.filter((word) => {
     const cleanedWord = word.replace(/\.|,/, '').toLowerCase().trim();
-    if (keyWords.includes(cleanedWord)) {
-      score += 1;
-    }
-  });
 
-  return `<button type="button" class="btn btn-warning">
+    return keyWords.includes(cleanedWord);
+  });
+  const score = filteredUserBiographyWords.length;
+
+  return `
+  <button type="button" class="btn btn-warning">
     Score <span class="badge badge-light">${score}</span>
     <span class="sr-only">keywords found</span>
   </button>`;
