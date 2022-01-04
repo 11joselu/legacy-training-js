@@ -36,6 +36,12 @@ function getScore(m_score1, m_score2) {
   }
 
   var score = '';
+  var scores = {
+    0: 'Love',
+    1: 'Fifteen',
+    2: 'Thirty',
+    3: 'Forty',
+  };
 
   for (var i = 0; i <= 1; i++) {
     var tempScore = 0;
@@ -47,20 +53,7 @@ function getScore(m_score1, m_score2) {
       tempScore = m_score2;
     }
 
-    switch (tempScore) {
-      case 0:
-        score += 'Love';
-        break;
-      case 1:
-        score += 'Fifteen';
-        break;
-      case 2:
-        score += 'Thirty';
-        break;
-      case 3:
-        score += 'Forty';
-        break;
-    }
+    score += scores[tempScore];
   }
 
   return score;
