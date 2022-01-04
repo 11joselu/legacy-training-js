@@ -8,11 +8,11 @@ var scores = {
 };
 
 function getScore(m_score1, m_score2) {
-  if (playersHasSamePoints(m_score1, m_score2)) {
-    if (m_score1 >= 3) {
-      return 'Deuce';
-    }
+  if (isDeuce(m_score1, m_score2)) {
+    return 'Deuce';
+  }
 
+  if (playersHasSamePoints(m_score1, m_score2)) {
     const score = scores[m_score1];
 
     return score + '-All';
@@ -42,6 +42,10 @@ function getScore(m_score1, m_score2) {
   score += scores[m_score2];
 
   return score;
+}
+
+function isDeuce(m_score1, m_score2) {
+  return playersHasSamePoints(m_score1, m_score2) && m_score1 >= 3;
 }
 
 function playersHasSamePoints(player1Score, player2Score) {
