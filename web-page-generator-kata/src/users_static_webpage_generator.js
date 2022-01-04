@@ -87,6 +87,8 @@ function createUserInfoBlock(user) {
       ${createScoreButtons(userBiography)}
     </h1>
 
+    ${createUserLocalizationBlock(userBiography)}
+
     <p class="lead">${userBiography}</p>
   `;
 }
@@ -117,6 +119,14 @@ function createScoreButtons(userBiography) {
     Score <span class="badge badge-light">${score}</span>
     <span class="sr-only">keywords found</span>
   </button>`;
+}
+
+function createUserLocalizationBlock(userBiography) {
+  const availableLocalization = [];
+
+  return `
+    <span class="badge badge-pill badge-info">Madrid</span>
+  `;
 }
 
 function createWriteln(stream) {
