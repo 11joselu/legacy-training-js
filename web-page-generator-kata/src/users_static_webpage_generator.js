@@ -43,7 +43,7 @@ class UsersStaticWebpageGenerator {
 
     writeln('<main role="main" class="inner cover">');
     users.forEach((user) => {
-      const userInfoBlockContent = createUserInfoBlock(user);
+      const userInfoBlockContent = this.createUserInfoBlock(user);
       writeln(userInfoBlockContent);
     });
     writeln('</main>');
@@ -76,98 +76,96 @@ class UsersStaticWebpageGenerator {
 
     stream.end();
   }
-}
+  createUserInfoBlock(user) {
+    const userBiography = user.getBiography();
 
-function createUserInfoBlock(user) {
-  const userBiography = user.getBiography();
+    return `
+      <h1 class="cover-heading">
+        ${user.getName()}
+        ${this.createScoreButtons(userBiography)}
+      </h1>
 
-  return `
-    <h1 class="cover-heading">
-      ${user.getName()}
-      ${createScoreButtons(userBiography)}
-    </h1>
+      ${this.createUserLocalizationBlock(userBiography)}
+      ${this.createUserCommunityManagerRole(userBiography)}
 
-    ${createUserLocalizationBlock(userBiography)}
-    ${createUserCommunityManagerRole(userBiography)}
-
-    <p class="lead">${userBiography}</p>
-  `;
-}
-
-function createScoreButtons(userBiography) {
-  const keyWords = [
-    'edición',
-    'sociedad',
-    'mundo',
-    'libro',
-    'texto',
-    'revista',
-    'valores',
-    'educación',
-    'teatro',
-    'social',
-  ];
-  const userBiographyWords = userBiography.split(' ');
-  const filteredUserBiographyWords = userBiographyWords.filter((word) => {
-    const cleanedWord = word.replace(/\.|,/, '').toLowerCase().trim();
-
-    return keyWords.includes(cleanedWord);
-  });
-  const score = filteredUserBiographyWords.length;
-
-  return `
-  <button type="button" class="btn btn-warning">
-    Score <span class="badge badge-light">${score}</span>
-    <span class="sr-only">keywords found</span>
-  </button>`;
-}
-
-function createUserLocalizationBlock(userBiography) {
-  const availableLocalization = [
-    'Barcelona',
-    'Madrid',
-    'Granada',
-    'Vigo',
-    'Palma de Mallorca',
-  ];
-
-  const userLocalization = findArrayItemInBiography(
-    availableLocalization,
-    userBiography
-  );
-
-  if (!userLocalization) return '';
-
-  return `
-    <span class="badge badge-pill badge-info">${userLocalization}</span>
-  `;
-}
-
-function createUserCommunityManagerRole(userBiography) {
-  const roles = ['community manager'];
-  let userRole = findArrayItemInBiography(roles, userBiography);
-
-  if (!userRole) return '';
-
-  return `
-     <span class="badge badge-pill badge-danger">${capitalize(userRole)}</span>
-  `;
-}
-
-function findArrayItemInBiography(array, biography) {
-  for (let index = 0; index < array.length; index++) {
-    const item = array[index];
-
-    if (biography.includes(item)) {
-      return item;
-    }
+      <p class="lead">${userBiography}</p>
+    `;
   }
 
-  return '';
-}
+  createScoreButtons(userBiography) {
+    const keyWords = [
+      'edición',
+      'sociedad',
+      'mundo',
+      'libro',
+      'texto',
+      'revista',
+      'valores',
+      'educación',
+      'teatro',
+      'social',
+    ];
+    const userBiographyWords = userBiography.split(' ');
+    const filteredUserBiographyWords = userBiographyWords.filter((word) => {
+      const cleanedWord = word.replace(/\.|,/, '').toLowerCase().trim();
 
-function capitalize(s) {
-  return s[0].toUpperCase() + s.slice(1);
+      return keyWords.includes(cleanedWord);
+    });
+    const score = filteredUserBiographyWords.length;
+
+    return `
+    <button type="button" class="btn btn-warning">
+      Score <span class="badge badge-light">${score}</span>
+      <span class="sr-only">keywords found</span>
+    </button>`;
+  }
+
+  createUserLocalizationBlock(userBiography) {
+    const availableLocalization = [
+      'Barcelona',
+      'Madrid',
+      'Granada',
+      'Vigo',
+      'Palma de Mallorca',
+    ];
+
+    const userLocalization = this.findArrayItemInBiography(
+      availableLocalization,
+      userBiography
+    );
+
+    if (!userLocalization) return '';
+
+    return `
+      <span class="badge badge-pill badge-info">${userLocalization}</span>
+    `;
+  }
+
+  createUserCommunityManagerRole(userBiography) {
+    const roles = ['community manager'];
+    let userRole = this.findArrayItemInBiography(roles, userBiography);
+
+    if (!userRole) return '';
+
+    const capitalizedRole =
+      userRole.charAt(0).toUpperCase() + userRole.slice(1);
+
+    return `
+       <span class="badge badge-pill badge-danger">${capitalizedRole}</span>
+    `;
+  }
+
+  findArrayItemInBiography(array, biography) {
+    for (let index = 0; index < array.length; index++) {
+      const item = array[index];
+
+      if (biography.includes(item)) {
+        return item;
+      }
+    }
+
+    return '';
+  }
 }
 
 function createWriteln(stream) {
