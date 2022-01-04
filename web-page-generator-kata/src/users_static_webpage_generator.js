@@ -82,36 +82,18 @@ class UsersStaticWebpageGenerator {
     return `
       <h1 class="cover-heading">
         ${user.getName()}
-        ${this.createScoreButtons(userBiography)}
+        ${this.createScoreButtons(user)}
       </h1>
 
-      ${this.createUserLocalizationBlock(userBiography)}
-      ${this.createUserCommunityManagerRole(userBiography)}
+      ${this.createUserLocalizationBlock(user)}
+      ${this.createUserCommunityManagerRole(user)}
 
       <p class="lead">${userBiography}</p>
     `;
   }
 
-  createScoreButtons(userBiography) {
-    const keyWords = [
-      'edición',
-      'sociedad',
-      'mundo',
-      'libro',
-      'texto',
-      'revista',
-      'valores',
-      'educación',
-      'teatro',
-      'social',
-    ];
-    const userBiographyWords = userBiography.split(' ');
-    const filteredUserBiographyWords = userBiographyWords.filter((word) => {
-      const cleanedWord = word.replace(/\.|,/, '').toLowerCase().trim();
-
-      return keyWords.includes(cleanedWord);
-    });
-    const score = filteredUserBiographyWords.length;
+  createScoreButtons(user) {
+    const score = user.getScore();
 
     return `
     <button type="button" class="btn btn-warning">
@@ -120,19 +102,8 @@ class UsersStaticWebpageGenerator {
     </button>`;
   }
 
-  createUserLocalizationBlock(userBiography) {
-    const availableLocalization = [
-      'Barcelona',
-      'Madrid',
-      'Granada',
-      'Vigo',
-      'Palma de Mallorca',
-    ];
-
-    const userLocalization = this.findArrayItemInBiography(
-      availableLocalization,
-      userBiography
-    );
+  createUserLocalizationBlock(user) {
+    const userLocalization = user.getLocalization();
 
     if (!userLocalization) return '';
 
@@ -141,11 +112,10 @@ class UsersStaticWebpageGenerator {
     `;
   }
 
-  createUserCommunityManagerRole(userBiography) {
-    const roles = ['community manager'];
-    let userRole = this.findArrayItemInBiography(roles, userBiography);
+  createUserCommunityManagerRole(user) {
+    let userRole = user.getRole();
 
-    if (!userRole) return '';
+    if (userRole === null) return '';
 
     const capitalizedRole =
       userRole.charAt(0).toUpperCase() + userRole.slice(1);
