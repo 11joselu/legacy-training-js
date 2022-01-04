@@ -1,26 +1,23 @@
 'use strict';
 
 function getScore(m_score1, m_score2) {
-  var score = '';
-
   if (m_score1 === m_score2) {
-    switch (m_score1) {
-      case 0:
-        score = 'Love-All';
-        break;
-      case 1:
-        score = 'Fifteen-All';
-        break;
-      case 2:
-        score = 'Thirty-All';
-        break;
-      default:
-        score = 'Deuce';
-        break;
+    if (m_score1 === 0) {
+      return 'Love-All';
     }
 
-    return score;
+    if (m_score1 === 1) {
+      return 'Fifteen-All';
+    }
+
+    if (m_score1 === 2) {
+      return 'Thirty-All';
+    }
+
+    return 'Deuce';
   }
+
+  var score = '';
 
   if (playerWonsAllPoints(m_score1) || playerWonsAllPoints(m_score2)) {
     var minusResult = m_score1 - m_score2;
