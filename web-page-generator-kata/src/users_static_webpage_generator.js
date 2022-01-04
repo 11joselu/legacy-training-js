@@ -78,13 +78,15 @@ class UsersStaticWebpageGenerator {
 }
 
 function createUserInfoBlock(writeln, user) {
+  const userBiography = user.getBiography();
+
   writeln(`
     <h1 class="cover-heading">
       ${user.getName()}
-      ${createScoreButtons(user.getBiography())}
+      ${createScoreButtons(userBiography)}
     </h1>
   `);
-  writeln(`<p class="lead">${user.getBiography()}</p>`);
+  writeln(`<p class="lead">${userBiography}</p>`);
 }
 
 function createScoreButtons(userBiography) {
