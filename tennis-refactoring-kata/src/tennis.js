@@ -1,20 +1,21 @@
 'use strict';
 
+var scores = {
+  0: 'Love',
+  1: 'Fifteen',
+  2: 'Thirty',
+  3: 'Forty',
+};
+
 function getScore(m_score1, m_score2) {
   if (playersHasSamePoints(m_score1, m_score2)) {
-    if (m_score1 === 0) {
-      return 'Love-All';
+    if (m_score1 >= 3) {
+      return 'Deuce';
     }
 
-    if (m_score1 === 1) {
-      return 'Fifteen-All';
-    }
+    const score = scores[m_score1];
 
-    if (m_score1 === 2) {
-      return 'Thirty-All';
-    }
-
-    return 'Deuce';
+    return score + '-All';
   }
 
   if (playerWonsAllPoints(m_score1) || playerWonsAllPoints(m_score2)) {
@@ -35,12 +36,6 @@ function getScore(m_score1, m_score2) {
     return 'Win for player2';
   }
 
-  var scores = {
-    0: 'Love',
-    1: 'Fifteen',
-    2: 'Thirty',
-    3: 'Forty',
-  };
   var score = scores[m_score1];
 
   score += '-';
