@@ -131,16 +131,10 @@ function createUserLocalizationBlock(userBiography) {
     'Palma de Mallorca',
   ];
 
-  let userLocalization = '';
-
-  for (let index = 0; index < availableLocalization.length; index++) {
-    const localization = availableLocalization[index];
-
-    if (userBiography.includes(localization)) {
-      userLocalization = localization;
-      break;
-    }
-  }
+  const userLocalization = findArrayItemInBiography(
+    availableLocalization,
+    userBiography
+  );
 
   if (!userLocalization) return '';
 
@@ -150,24 +144,30 @@ function createUserLocalizationBlock(userBiography) {
 }
 
 function createUserCommunityManagerRole(userBiography) {
-  const roles = ['Community manager'];
-  let userRole = '';
-
-  for (let index = 0; index < roles.length; index++) {
-    const role = roles[index];
-    const lowercasedRole = role.toLoweCase();
-
-    if (userBiography.includes(lowercasedRole)) {
-      userRole = role;
-      break;
-    }
-  }
+  const roles = ['community manager'];
+  let userRole = findArrayItemInBiography(roles, userBiography);
 
   if (!userRole) return '';
 
   return `
-     <span class="badge badge-pill badge-danger">${userRole}</span>
+     <span class="badge badge-pill badge-danger">${capitalize(userRole)}</span>
   `;
+}
+
+function findArrayItemInBiography(array, biography) {
+  for (let index = 0; index < array.length; index++) {
+    const item = array[index];
+
+    if (biography.includes(item)) {
+      return item;
+    }
+  }
+
+  return '';
+}
+
+function capitalize(s) {
+  return s[0].toUpperCase() + s.slice(1);
 }
 
 function createWriteln(stream) {
