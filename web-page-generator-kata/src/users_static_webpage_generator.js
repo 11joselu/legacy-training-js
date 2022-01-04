@@ -122,10 +122,29 @@ function createScoreButtons(userBiography) {
 }
 
 function createUserLocalizationBlock(userBiography) {
-  const availableLocalization = [];
+  const availableLocalization = [
+    'Barcelona',
+    'Madrid',
+    'Granada',
+    'Vigo',
+    'Palma de Mallorca',
+  ];
+
+  let userLocalization = '';
+
+  for (let index = 0; index < availableLocalization.length; index++) {
+    const localization = availableLocalization[index];
+
+    if (userBiography.includes(localization)) {
+      userLocalization = localization;
+      break;
+    }
+  }
+
+  if (!userLocalization) return '';
 
   return `
-    <span class="badge badge-pill badge-info">Madrid</span>
+    <span class="badge badge-pill badge-info">${userLocalization}</span>
   `;
 }
 
