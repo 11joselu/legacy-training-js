@@ -41,7 +41,7 @@ class RegisterUser {
   });
    */
 
-    return res.status(StatusCodes.CREATED).json({ user });
+    return user;
   }
 }
 
