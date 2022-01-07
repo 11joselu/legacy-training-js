@@ -4,7 +4,7 @@ const { StatusCodes } = require('http-status-codes');
 const PasswordIsNotValidException = require('./PasswordIsNotValidException');
 const EmailIsAlreadyInUse = require('./EmailIsAlreadyInUse');
 class RegisterUser {
-  execute(req, res) {
+  execute(req) {
     if (req.body.password.length <= 8 || !req.body.password.includes('_')) {
       throw new PasswordIsNotValidException();
     }

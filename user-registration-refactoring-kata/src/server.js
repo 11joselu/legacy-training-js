@@ -14,7 +14,7 @@ server.use(express.json());
 server.post('/users', async (req, res) => {
   const registerUser = new RegisterUser();
   try {
-    const user = registerUser.execute(req, res);
+    const user = registerUser.execute(req);
     return res.status(StatusCodes.CREATED).json({ user });
   } catch (e) {
     if (e instanceof PasswordIsNotValidException) {
