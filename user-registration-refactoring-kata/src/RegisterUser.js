@@ -1,14 +1,13 @@
 const orm = require('./user_orm_repository');
 const nodemailer = require('nodemailer');
 const { StatusCodes } = require('http-status-codes');
-
+const PasswordIsNotValidException = require('./PasswordIsNotValidException');
 class RegisterUser {
   execute(req, res) {
     if (req.body.password.length <= 8 || !req.body.password.includes('_')) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json('The password is not valid!');
+      throw new PasswordIsNotValidException();
     }
+
     if (orm.findByEmail(req.body.email) !== undefined) {
       return res
         .status(StatusCodes.BAD_REQUEST)
