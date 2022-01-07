@@ -5,6 +5,7 @@ const { StatusCodes } = require('http-status-codes');
 const orm = require('./user_orm_repository');
 const RegisterUser = require('./RegisterUser');
 const PasswordIsNotValidException = require('./PasswordIsNotValidException');
+const EmailIsAlreadyInUse = require('./EmailIsAlreadyInUse');
 
 const server = express();
 
@@ -19,6 +20,12 @@ server.post('/users', async (req, res) => {
       return res
         .status(StatusCodes.BAD_REQUEST)
         .json('The password is not valid!');
+    }
+
+    if (e instanceof EmailIsAlreadyInUse) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json('The email is already in use');
     }
   }
 });

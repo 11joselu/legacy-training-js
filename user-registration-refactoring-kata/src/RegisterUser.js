@@ -2,6 +2,7 @@ const orm = require('./user_orm_repository');
 const nodemailer = require('nodemailer');
 const { StatusCodes } = require('http-status-codes');
 const PasswordIsNotValidException = require('./PasswordIsNotValidException');
+const EmailIsAlreadyInUse = require('./EmailIsAlreadyInUse');
 class RegisterUser {
   execute(req, res) {
     if (req.body.password.length <= 8 || !req.body.password.includes('_')) {
@@ -9,9 +10,7 @@ class RegisterUser {
     }
 
     if (orm.findByEmail(req.body.email) !== undefined) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json('The email is already in use');
+      throw new EmailIsAlreadyInUse();
     }
 
     const user = {
