@@ -12,9 +12,13 @@ const server = express();
 server.use(express.json());
 
 server.post('/users', async (req, res) => {
+  const password = req.body.password;
+  const name = req.body.name;
+  const email = req.body.email;
+
   const registerUser = new RegisterUser();
   try {
-    const user = registerUser.execute(req);
+    const user = registerUser.execute(password, email, name);
     return res.status(StatusCodes.CREATED).json({ user });
   } catch (e) {
     if (e instanceof PasswordIsNotValidException) {
