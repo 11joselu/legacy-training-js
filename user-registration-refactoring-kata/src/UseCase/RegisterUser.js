@@ -4,6 +4,7 @@ const PasswordIsNotValidException = require('../model/PasswordIsNotValidExceptio
 const EmailIsAlreadyInUse = require('../model/EmailIsAlreadyInUse');
 const User = require('../model/User');
 const Password = require('../model/Password');
+const Email = require('../model/Email');
 
 class RegisterUser {
   constructor(userRepository, emailSender) {
@@ -22,14 +23,18 @@ class RegisterUser {
 
     this.userRepository.save(user);
 
-    await this.emailSender.send({
-      from: 'noreply@codium.team',
-      to: email,
-      subject: 'Welcome to Codium',
-      html: '<h1>This is the confirmation email</h1>',
-    });
+    await this.emailSender.send(this._createWelcomeEmail(email));
 
     return user;
+  }
+
+  _createWelcomeEmail(to) {
+    return new Email(
+      'noreply@codium.team',
+      to,
+      'Welcome to Codium',
+      '<h1>This is the confirmation email</h1>'
+    );
   }
 }
 

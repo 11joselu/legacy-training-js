@@ -10,16 +10,14 @@ const transporter = nodemailer.createTransport({
 });
 
 class NodeMailerSender {
-  async send() {
+  async send(email) {
     // If a proper SMTP server is configured, this line could be uncommented
-    /**
-   await transporter.sendMail({
-    from: "noreply@codium.team",
-    to: email,
-    subject: "Welcome to Codium",
-    html: "<h1>This is the confirmation email</h1>",
-  });
-   */
+    // await transporter.sendMail({
+    //   from: email.getFrom(),
+    //   to: email.getTo(),
+    //   subject: email.getSubject(),
+    //   html: email.getBody(),
+    // });
   }
 }
 
