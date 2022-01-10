@@ -7,6 +7,7 @@ const RegisterUser = require('./UseCase/RegisterUser');
 const PasswordIsNotValidException = require('./model/PasswordIsNotValidException');
 const EmailIsAlreadyInUse = require('./model/EmailIsAlreadyInUse');
 const ORMUserRepository = require('./infrastructure/ORMUserRepository');
+const NodeMailerSender = require('./infrastructure/NodeMailerSender');
 
 const server = express();
 
@@ -18,9 +19,12 @@ server.post('/users', async (req, res) => {
   const email = req.body.email;
 
   const userRepository = new ORMUserRepository();
-  const registerUser = new RegisterUser(userRepository);
+  const emailSender = new NodeMailerSender();
+  const registerUser = new RegisterUser(userRepository, emailSender);
+
   try {
-    const user = registerUser.execute(name, email, password);
+    const user = await registerUser.execute(name, email, password);
+
     return res.status(StatusCodes.CREATED).json({ user });
   } catch (e) {
     if (e instanceof PasswordIsNotValidException) {
