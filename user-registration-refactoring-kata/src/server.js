@@ -6,6 +6,7 @@ const orm = require('./user_orm_repository');
 const RegisterUser = require('./UseCase/RegisterUser');
 const PasswordIsNotValidException = require('./model/PasswordIsNotValidException');
 const EmailIsAlreadyInUse = require('./model/EmailIsAlreadyInUse');
+const ORMUserRepository = require('./infrastructure/ORMUserRepository');
 
 const server = express();
 
@@ -16,7 +17,8 @@ server.post('/users', async (req, res) => {
   const name = req.body.name;
   const email = req.body.email;
 
-  const registerUser = new RegisterUser();
+  const userRepository = new ORMUserRepository();
+  const registerUser = new RegisterUser(userRepository);
   try {
     const user = registerUser.execute(password, email, name);
     return res.status(StatusCodes.CREATED).json({ user });

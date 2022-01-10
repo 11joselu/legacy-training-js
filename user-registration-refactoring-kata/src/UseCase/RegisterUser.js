@@ -4,12 +4,16 @@ const { StatusCodes } = require('http-status-codes');
 const PasswordIsNotValidException = require('../model/PasswordIsNotValidException');
 const EmailIsAlreadyInUse = require('../model/EmailIsAlreadyInUse');
 class RegisterUser {
+  constructor(userRepository) {
+    this.userRepository = userRepository;
+  }
+
   execute(password, email, name) {
     if (password.length <= 8 || !password.includes('_')) {
       throw new PasswordIsNotValidException();
     }
 
-    if (orm.findByEmail(email) !== undefined) {
+    if (this.userRepository.findByEmail(email) !== undefined) {
       throw new EmailIsAlreadyInUse();
     }
 
@@ -20,7 +24,7 @@ class RegisterUser {
       password: password,
     };
 
-    orm.save(user);
+    this.userRepository.save(user);
 
     //Send a confirmation email
     const transporter = nodemailer.createTransport({
