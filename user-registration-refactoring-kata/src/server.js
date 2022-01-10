@@ -3,9 +3,9 @@ const nodemailer = require('nodemailer');
 const { StatusCodes } = require('http-status-codes');
 
 const orm = require('./user_orm_repository');
-const RegisterUser = require('./RegisterUser');
-const PasswordIsNotValidException = require('./PasswordIsNotValidException');
-const EmailIsAlreadyInUse = require('./EmailIsAlreadyInUse');
+const RegisterUser = require('./UseCase/RegisterUser');
+const PasswordIsNotValidException = require('./model/PasswordIsNotValidException');
+const EmailIsAlreadyInUse = require('./model/EmailIsAlreadyInUse');
 
 const server = express();
 

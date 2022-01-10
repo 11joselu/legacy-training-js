@@ -1,8 +1,8 @@
-const orm = require('./user_orm_repository');
+const orm = require('../user_orm_repository');
 const nodemailer = require('nodemailer');
 const { StatusCodes } = require('http-status-codes');
-const PasswordIsNotValidException = require('./PasswordIsNotValidException');
-const EmailIsAlreadyInUse = require('./EmailIsAlreadyInUse');
+const PasswordIsNotValidException = require('../model/PasswordIsNotValidException');
+const EmailIsAlreadyInUse = require('../model/EmailIsAlreadyInUse');
 class RegisterUser {
   execute(password, email, name) {
     if (password.length <= 8 || !password.includes('_')) {
