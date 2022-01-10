@@ -4,22 +4,21 @@ const { StatusCodes } = require('http-status-codes');
 const PasswordIsNotValidException = require('../model/PasswordIsNotValidException');
 const EmailIsAlreadyInUse = require('../model/EmailIsAlreadyInUse');
 const User = require('../model/User');
+const Password = require('../model/Password');
 
 class RegisterUser {
   constructor(userRepository) {
     this.userRepository = userRepository;
   }
 
-  execute(name, email, password) {
-    if (password.length <= 8 || !password.includes('_')) {
-      throw new PasswordIsNotValidException();
-    }
+  execute(name, email, userPassword) {
+    const password = new Password(userPassword);
 
     if (this.userRepository.findByEmail(email) !== undefined) {
       throw new EmailIsAlreadyInUse();
     }
 
-    const user = new User(name, email, password);
+    const user = new User(name, email, password.value());
 
     this.userRepository.save(user);
 
