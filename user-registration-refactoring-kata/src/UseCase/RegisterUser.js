@@ -3,12 +3,14 @@ const nodemailer = require('nodemailer');
 const { StatusCodes } = require('http-status-codes');
 const PasswordIsNotValidException = require('../model/PasswordIsNotValidException');
 const EmailIsAlreadyInUse = require('../model/EmailIsAlreadyInUse');
+const User = require('../model/User');
+
 class RegisterUser {
   constructor(userRepository) {
     this.userRepository = userRepository;
   }
 
-  execute(password, email, name) {
+  execute(name, email, password) {
     if (password.length <= 8 || !password.includes('_')) {
       throw new PasswordIsNotValidException();
     }
@@ -17,12 +19,7 @@ class RegisterUser {
       throw new EmailIsAlreadyInUse();
     }
 
-    const user = {
-      id: Math.floor(Math.random() * 99999),
-      name: name,
-      email: email,
-      password: password,
-    };
+    const user = new User(name, email, password);
 
     this.userRepository.save(user);
 

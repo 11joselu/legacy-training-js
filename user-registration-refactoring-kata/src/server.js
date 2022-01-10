@@ -20,7 +20,7 @@ server.post('/users', async (req, res) => {
   const userRepository = new ORMUserRepository();
   const registerUser = new RegisterUser(userRepository);
   try {
-    const user = registerUser.execute(password, email, name);
+    const user = registerUser.execute(name, email, password);
     return res.status(StatusCodes.CREATED).json({ user });
   } catch (e) {
     if (e instanceof PasswordIsNotValidException) {
