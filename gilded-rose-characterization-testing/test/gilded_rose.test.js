@@ -86,6 +86,17 @@ describe('Gilded Rose', function () {
         expect(item.sellIn).toBe(19);
         expect(item.quality).toBe(21);
       });
+
+      it('With SellIn date passed. Quality should be resetted to 0', () => {
+        const gildedRose = new GildedRose([
+          new Item('Backstage passes to a TAFKAL80ETC concert', 0, 20),
+        ]);
+
+        const [item] = gildedRose.updateQuality();
+
+        expect(item.name).toBe('Backstage passes to a TAFKAL80ETC concert');
+        expect(item.quality).toBe(0);
+      });
     });
   });
 });
