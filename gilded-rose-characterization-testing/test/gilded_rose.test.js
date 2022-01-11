@@ -86,13 +86,13 @@ describe('Gilded Rose', function () {
 
       it('When SellIn is above to 11. Should reduced sellIn by one and quality increase by one', () => {
         const gildedRose = new GildedRose([
-          new Item('Backstage passes to a TAFKAL80ETC concert', 20, 20),
+          new Item('Backstage passes to a TAFKAL80ETC concert', 12, 20),
         ]);
 
         const [item] = gildedRose.updateQuality();
 
         expect(item.name).toBe('Backstage passes to a TAFKAL80ETC concert');
-        expect(item.sellIn).toBe(19);
+        expect(item.sellIn).toBe(11);
         expect(item.quality).toBe(21);
       });
 
@@ -115,6 +115,54 @@ describe('Gilded Rose', function () {
         const [item] = gildedRose.updateQuality();
 
         expect(item.name).toBe('Backstage passes to a TAFKAL80ETC concert');
+        expect(item.quality).toBe(50);
+      });
+    });
+
+    describe('Sulfuras, Hand of Ragnaros', () => {
+      it('When SellIn is below to 11. Should not reduce sellIn and quality must not change', () => {
+        const gildedRose = new GildedRose([
+          new Item('Sulfuras, Hand of Ragnaros', 10, 20),
+        ]);
+
+        const [item] = gildedRose.updateQuality();
+
+        expect(item.name).toBe('Sulfuras, Hand of Ragnaros');
+        expect(item.sellIn).toBe(10);
+        expect(item.quality).toBe(20);
+      });
+
+      it('When SellIn is above to 11. Should not change sellIn/quality', () => {
+        const gildedRose = new GildedRose([
+          new Item('Sulfuras, Hand of Ragnaros', 12, 20),
+        ]);
+
+        const [item] = gildedRose.updateQuality();
+
+        expect(item.name).toBe('Sulfuras, Hand of Ragnaros');
+        expect(item.sellIn).toBe(12);
+        expect(item.quality).toBe(20);
+      });
+
+      it('With SellIn date passed. Quality should keep it', () => {
+        const gildedRose = new GildedRose([
+          new Item('Sulfuras, Hand of Ragnaros', 0, 20),
+        ]);
+
+        const [item] = gildedRose.updateQuality();
+
+        expect(item.name).toBe('Sulfuras, Hand of Ragnaros');
+        expect(item.quality).toBe(20);
+      });
+
+      it('When has quality 50. Should not put quality over 50', () => {
+        const gildedRose = new GildedRose([
+          new Item('Sulfuras, Hand of Ragnaros', 10, 50),
+        ]);
+
+        const [item] = gildedRose.updateQuality();
+
+        expect(item.name).toBe('Sulfuras, Hand of Ragnaros');
         expect(item.quality).toBe(50);
       });
     });
