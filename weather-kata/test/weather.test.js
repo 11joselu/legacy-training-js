@@ -12,18 +12,16 @@ describe('Forecast should', function () {
     const forecast = new Forecast();
 
     const prediction = await forecast.predict('Madrid', null, false);
-    console.log('Today: ' + prediction);
 
-    expect(true).toBe(true); // I don't know how to test it
+    expect(prediction).toBe('Clear'); // I don't know how to test it
   });
 
   it("retrieve today's Barcelona weather", async () => {
     const forecast = new Forecast();
 
     const prediction = await forecast.predict('Barcelona', null, false);
-    console.log('Today: ' + prediction);
 
-    expect(prediction).toBe('Showers'); // I don't know how to test it
+    expect(prediction).toBe('Showers');
   });
 
   it("retrieve any day's weather", async () => {
@@ -33,9 +31,8 @@ describe('Forecast should', function () {
     dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
 
     const prediction = await forecast.predict(city, dayAfterTomorrow);
-    console.log('Day after tomorrow: ' + prediction);
 
-    expect(true).toBe(true); // I don't know how to test it
+    expect(prediction).toBe('Light Cloud');
   });
 
   it('retrieve the wind of any day', async () => {
@@ -43,9 +40,8 @@ describe('Forecast should', function () {
     let city = 'Madrid';
 
     const prediction = await forecast.predict(city, null, true);
-    console.log('Wind: ' + prediction);
 
-    expect(true).toBe(true); // I don't know how to test it
+    expect(prediction).toBe(3.239405882502187);
   });
 
   it('return empty string when requesting a forecast for more than 5 days', async () => {
