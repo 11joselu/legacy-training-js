@@ -30,4 +30,18 @@ describe('Gilded Rose', function () {
       expect(item.quality).toBe(0);
     });
   });
+
+  describe('When a Item is a special item: ', () => {
+    describe('Aged Brie', () => {
+      it('SellIn should be reduced and quality must increase one', () => {
+        const gildedRose = new GildedRose([new Item('Aged Brie', 10, 20)]);
+
+        const [item] = gildedRose.updateQuality();
+
+        expect(item.name).toBe('Aged Brie');
+        expect(item.sellIn).toBe(9);
+        expect(item.quality).toBe(21);
+      });
+    });
+  });
 });
