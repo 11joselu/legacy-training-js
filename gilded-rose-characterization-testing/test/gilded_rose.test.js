@@ -87,7 +87,7 @@ describe('Gilded Rose', function () {
         expect(item.quality).toBe(21);
       });
 
-      it('With SellIn date passed. Quality should be resetted to 0', () => {
+      it('With SellIn date passed. Quality should be reset to 0', () => {
         const gildedRose = new GildedRose([
           new Item('Backstage passes to a TAFKAL80ETC concert', 0, 20),
         ]);
@@ -96,6 +96,17 @@ describe('Gilded Rose', function () {
 
         expect(item.name).toBe('Backstage passes to a TAFKAL80ETC concert');
         expect(item.quality).toBe(0);
+      });
+
+      it('Whe has quality 50. Should not put quality over 50', () => {
+        const gildedRose = new GildedRose([
+          new Item('Backstage passes to a TAFKAL80ETC concert', 10, 50),
+        ]);
+
+        const [item] = gildedRose.updateQuality();
+
+        expect(item.name).toBe('Backstage passes to a TAFKAL80ETC concert');
+        expect(item.quality).toBe(50);
       });
     });
   });
