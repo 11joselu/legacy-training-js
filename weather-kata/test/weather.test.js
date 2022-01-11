@@ -17,6 +17,15 @@ describe('Forecast should', function () {
     expect(true).toBe(true); // I don't know how to test it
   });
 
+  it("retrieve today's Barcelona weather", async () => {
+    const forecast = new Forecast();
+
+    const prediction = await forecast.predict('Barcelona', null, false);
+    console.log('Today: ' + prediction);
+
+    expect(prediction).toBe('Showers'); // I don't know how to test it
+  });
+
   it("retrieve any day's weather", async () => {
     const forecast = new Forecast();
     let city = 'Madrid';
