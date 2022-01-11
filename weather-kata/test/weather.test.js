@@ -1,4 +1,4 @@
-let Forecast = require('../src/forecast');
+const Forecast = require('../src/forecast');
 
 describe('Forecast should', function () {
   let originalTimeout;
@@ -8,57 +8,46 @@ describe('Forecast should', function () {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
   });
 
-  it("retrieve today's weather", function (done) {
+  it("retrieve today's weather", async () => {
     const forecast = new Forecast();
 
-    forecast.predict('Madrid', null, false).then(function (prediction) {
-      console.log('Today: ' + prediction);
+    const prediction = await forecast.predict('Madrid', null, false);
+    console.log('Today: ' + prediction);
 
-      expect(true).toBe(true); // I don't know how to test it
-
-      done();
-    });
+    expect(true).toBe(true); // I don't know how to test it
   });
 
-  it("retrieve any day's weather", function (done) {
+  it("retrieve any day's weather", async () => {
     const forecast = new Forecast();
     let city = 'Madrid';
     let dayAfterTomorrow = new Date();
     dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
 
-    forecast.predict(city, dayAfterTomorrow).then(function (prediction) {
-      console.log('Day after tomorrow: ' + prediction);
+    const prediction = await forecast.predict(city, dayAfterTomorrow);
+    console.log('Day after tomorrow: ' + prediction);
 
-      expect(true).toBe(true); // I don't know how to test it
-
-      done();
-    });
+    expect(true).toBe(true); // I don't know how to test it
   });
 
-  it('retrieve the wind of any day', function (done) {
+  it('retrieve the wind of any day', async () => {
     const forecast = new Forecast();
     let city = 'Madrid';
 
-    forecast.predict(city, null, true).then(function (prediction) {
-      console.log('Wind: ' + prediction);
+    const prediction = await forecast.predict(city, null, true);
+    console.log('Wind: ' + prediction);
 
-      expect(true).toBe(true); // I don't know how to test it
-
-      done();
-    });
+    expect(true).toBe(true); // I don't know how to test it
   });
 
-  it('return empty string when requesting a forecast for more than 5 days', function (done) {
+  it('return empty string when requesting a forecast for more than 5 days', async () => {
     const forecast = new Forecast();
     let city = 'Madrid';
     let sixDaysForecast = new Date();
     sixDaysForecast.setDate(new Date().getDate() + 6);
 
-    forecast.predict(city, sixDaysForecast).then(function (prediction) {
-      expect(prediction).toBe('');
+    const prediction = await forecast.predict(city, sixDaysForecast);
 
-      done();
-    });
+    expect(prediction).toBe('');
   });
 
   afterEach(function () {
