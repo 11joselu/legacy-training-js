@@ -72,6 +72,17 @@ describe('Gilded Rose', function () {
     });
 
     describe('Backstage passes to a TAFKAL80ETC concert', () => {
+      it('When SellIn is below to 6. Should reduce sellIn by one and quality increase by three', () => {
+        const gildedRose = new GildedRose([
+          new Item('Backstage passes to a TAFKAL80ETC concert', 5, 20),
+        ]);
+
+        const [item] = gildedRose.updateQuality();
+
+        expect(item.sellIn).toBe(4);
+        expect(item.quality).toBe(23);
+      });
+
       it('When SellIn is below to 11. Should be reduce sellIn and quality must increase by two', () => {
         const gildedRose = new GildedRose([
           new Item('Backstage passes to a TAFKAL80ETC concert', 10, 20),
