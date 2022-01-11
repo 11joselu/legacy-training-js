@@ -33,7 +33,7 @@ describe('Gilded Rose', function () {
 
   describe('When a Item is a special item: ', () => {
     describe('Aged Brie', () => {
-      it('SellIn should be reduced and quality must increase one', () => {
+      it('SellIn is 10. Should be reduced and quality must increase one', () => {
         const gildedRose = new GildedRose([new Item('Aged Brie', 10, 20)]);
 
         const [item] = gildedRose.updateQuality();
@@ -43,7 +43,7 @@ describe('Gilded Rose', function () {
         expect(item.quality).toBe(21);
       });
 
-      it('With SellIn date passed. Quality should increment twice as fast', () => {
+      it('SellIn date is passed. Quality should increment twice as fast', () => {
         const gildedRose = new GildedRose([new Item('Aged Brie', 0, 20)]);
 
         const [item] = gildedRose.updateQuality();
@@ -52,13 +52,22 @@ describe('Gilded Rose', function () {
         expect(item.quality).toBe(22);
       });
 
-      it('When has quality 50. Should not put quality over 50', () => {
+      it('SellIn is 10 and quality over 50. Should not modify quality value', () => {
         const gildedRose = new GildedRose([new Item('Aged Brie', 10, 50)]);
 
         const [item] = gildedRose.updateQuality();
 
         expect(item.name).toBe('Aged Brie');
         expect(item.quality).toBe(50);
+      });
+
+      it('SellIn is 0 and quality is 0. Should increase quality twice as fast', () => {
+        const gildedRose = new GildedRose([new Item('Aged Brie', 0, 0)]);
+
+        const [item] = gildedRose.updateQuality();
+
+        expect(item.name).toBe('Aged Brie');
+        expect(item.quality).toBe(2);
       });
     });
 
