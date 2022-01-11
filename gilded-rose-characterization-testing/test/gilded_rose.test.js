@@ -74,6 +74,18 @@ describe('Gilded Rose', function () {
         expect(item.sellIn).toBe(9);
         expect(item.quality).toBe(22);
       });
+
+      it('When SellIn is above to 11. Should reduced sellIn by one and quality increase by one', () => {
+        const gildedRose = new GildedRose([
+          new Item('Backstage passes to a TAFKAL80ETC concert', 20, 20),
+        ]);
+
+        const [item] = gildedRose.updateQuality();
+
+        expect(item.name).toBe('Backstage passes to a TAFKAL80ETC concert');
+        expect(item.sellIn).toBe(19);
+        expect(item.quality).toBe(21);
+      });
     });
   });
 });
