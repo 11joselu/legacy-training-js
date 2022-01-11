@@ -52,7 +52,7 @@ describe('Gilded Rose', function () {
         expect(item.quality).toBe(22);
       });
 
-      it('Whe has quality 50. Should not put quality over 50', () => {
+      it('When has quality 50. Should not put quality over 50', () => {
         const gildedRose = new GildedRose([new Item('Aged Brie', 10, 50)]);
 
         const [item] = gildedRose.updateQuality();
@@ -98,7 +98,7 @@ describe('Gilded Rose', function () {
         expect(item.quality).toBe(0);
       });
 
-      it('Whe has quality 50. Should not put quality over 50', () => {
+      it('When has quality 50. Should not put quality over 50', () => {
         const gildedRose = new GildedRose([
           new Item('Backstage passes to a TAFKAL80ETC concert', 10, 50),
         ]);
