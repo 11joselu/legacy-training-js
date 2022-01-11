@@ -132,6 +132,18 @@ describe('Gilded Rose', function () {
         expect(item.quality).toBe(20);
       });
 
+      it('When SellIn is below to 6. Should reduce sellIn and quality must not change', () => {
+        const gildedRose = new GildedRose([
+          new Item('Sulfuras, Hand of Ragnaros', 5, 20),
+        ]);
+
+        const [item] = gildedRose.updateQuality();
+
+        expect(item.name).toBe('Sulfuras, Hand of Ragnaros');
+        expect(item.sellIn).toBe(5);
+        expect(item.quality).toBe(20);
+      });
+
       it('When SellIn is above to 11. Should not change sellIn/quality', () => {
         const gildedRose = new GildedRose([
           new Item('Sulfuras, Hand of Ragnaros', 12, 20),
