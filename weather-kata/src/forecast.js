@@ -1,4 +1,4 @@
-const request = require("request");
+const request = require('request');
 
 class Forecast {
   predict(city, datetime, wind) {
@@ -14,14 +14,14 @@ class Forecast {
       if (datetime < datetime2) {
         // Find the id of the city on metawheather
         request(
-          "https://www.metaweather.com/api/location/search/?query=" + city,
+          'https://www.metaweather.com/api/location/search/?query=' + city,
           { json: true },
           (err, res, body) => {
             const woeid = body[0].woeid;
 
             // Find the predictions for the city
             request(
-              "https://www.metaweather.com/api/location/" + woeid,
+              'https://www.metaweather.com/api/location/' + woeid,
               { json: true },
               (err, res, body) => {
                 const results = body.consolidated_weather;
@@ -44,7 +44,7 @@ class Forecast {
           }
         );
       } else {
-        resolve("");
+        resolve('');
       }
     });
   }
