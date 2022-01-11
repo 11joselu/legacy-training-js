@@ -1,6 +1,6 @@
-let Forecast = require("../src/forecast");
+let Forecast = require('../src/forecast');
 
-describe("Forecast should", function () {
+describe('Forecast should', function () {
   let originalTimeout;
 
   beforeEach(function () {
@@ -11,8 +11,8 @@ describe("Forecast should", function () {
   it("retrieve today's weather", function (done) {
     const forecast = new Forecast();
 
-    forecast.predict("Madrid", null, false).then(function (prediction) {
-      console.log("Today: " + prediction);
+    forecast.predict('Madrid', null, false).then(function (prediction) {
+      console.log('Today: ' + prediction);
 
       expect(true).toBe(true); // I don't know how to test it
 
@@ -22,12 +22,12 @@ describe("Forecast should", function () {
 
   it("retrieve any day's weather", function (done) {
     const forecast = new Forecast();
-    let city = "Madrid";
+    let city = 'Madrid';
     let dayAfterTomorrow = new Date();
     dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
 
     forecast.predict(city, dayAfterTomorrow).then(function (prediction) {
-      console.log("Day after tomorrow: " + prediction);
+      console.log('Day after tomorrow: ' + prediction);
 
       expect(true).toBe(true); // I don't know how to test it
 
@@ -35,12 +35,12 @@ describe("Forecast should", function () {
     });
   });
 
-  it("retrieve the wind of any day", function (done) {
+  it('retrieve the wind of any day', function (done) {
     const forecast = new Forecast();
-    let city = "Madrid";
+    let city = 'Madrid';
 
     forecast.predict(city, null, true).then(function (prediction) {
-      console.log("Wind: " + prediction);
+      console.log('Wind: ' + prediction);
 
       expect(true).toBe(true); // I don't know how to test it
 
@@ -48,14 +48,14 @@ describe("Forecast should", function () {
     });
   });
 
-  it("return empty string when requesting a forecast for more than 5 days", function (done) {
+  it('return empty string when requesting a forecast for more than 5 days', function (done) {
     const forecast = new Forecast();
-    let city = "Madrid";
+    let city = 'Madrid';
     let sixDaysForecast = new Date();
     sixDaysForecast.setDate(new Date().getDate() + 6);
 
     forecast.predict(city, sixDaysForecast).then(function (prediction) {
-      expect(prediction).toBe("");
+      expect(prediction).toBe('');
 
       done();
     });
