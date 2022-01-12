@@ -101,11 +101,23 @@ describe('Forecast should', function () {
     expect(prediction).toBe(5.7766597588430235);
   });
 
-  it.skip('return empty string when requesting a forecast for more than 5 days', async () => {
+  it('return empty string when requesting a forecast for more than 5 days', async () => {
     const forecast = new Forecast();
     let city = 'Madrid';
     let sixDaysForecast = new Date();
     sixDaysForecast.setDate(new Date().getDate() + 6);
+    forecast.getCityId = jest.fn().mockImplementation((city, onSuccess) => {
+      const body = fixtures.MADRID_ID;
+
+      onSuccess(error, res, body);
+    });
+    forecast.getCityWeatherData = jest
+      .fn()
+      .mockImplementation((cityId, onSuccess) => {
+        const body = fixtures.MADRID_WEATHER;
+
+        onSuccess(error, res, body);
+      });
 
     const prediction = await forecast.predict(city, sixDaysForecast);
 
