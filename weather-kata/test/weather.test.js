@@ -2,13 +2,6 @@ const Forecast = require('../src/forecast');
 const fixtures = require('./fixtures');
 
 describe('Forecast should', function () {
-  let originalTimeout;
-
-  beforeEach(function () {
-    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
-  });
-
   it("retrieve today's weather", async () => {
     const forecast = new Forecast();
     const error = null;
@@ -122,9 +115,5 @@ describe('Forecast should', function () {
     const prediction = await forecast.predict(city, sixDaysForecast);
 
     expect(prediction).toBe('');
-  });
-
-  afterEach(function () {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
   });
 });
