@@ -41,6 +41,24 @@ describe('TripService', () => {
       expect(tripDAO.findTripsByUser).toHaveBeenCalledWith(user);
       expect(tripList).toEqual([]);
     });
+
+    it('And has friends. Should search for friend list and return it', () => {
+      const foundFriend = new TestUser([]);
+      const sessionUser = new TestUser([]);
+      const friends = [sessionUser];
+      const user = new TestUser(friends);
+      const tripDAO = {
+        findTripsByUser: jest.fn(() => [foundFriend]),
+      };
+      const tripService = new TripService(tripDAO);
+
+      tripService.getUserSession = jest.fn(() => sessionUser);
+
+      const tripList = tripService.getTripsByUser(user);
+
+      expect(tripDAO.findTripsByUser).toHaveBeenCalledWith(user);
+      expect(tripList).toEqual([foundFriend]);
+    });
   });
 });
 
