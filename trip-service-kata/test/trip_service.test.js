@@ -16,11 +16,29 @@ describe('TripService', () => {
   describe('When user is logged in', () => {
     it('And does not has friend. Should return empty trip list', () => {
       const sessionUser = new TestUser();
+      const user = new TestUser();
       const tripService = new TripService();
       tripService.getUserSession = jest.fn(() => sessionUser);
 
-      const tripList = tripService.getTripsByUser(sessionUser);
+      const tripList = tripService.getTripsByUser(user);
 
+      expect(tripList).toEqual([]);
+    });
+
+    it('And has friends. Should search for friend list', () => {
+      const sessionUser = new TestUser([]);
+      const friends = [sessionUser];
+      const user = new TestUser(friends);
+      const tripDAO = {
+        findTripsByUser: jest.fn(() => []),
+      };
+      const tripService = new TripService(tripDAO);
+
+      tripService.getUserSession = jest.fn(() => sessionUser);
+
+      const tripList = tripService.getTripsByUser(user);
+
+      expect(tripDAO.findTripsByUser).toHaveBeenCalledWith(user);
       expect(tripList).toEqual([]);
     });
   });

@@ -4,6 +4,10 @@ let UserSession = require('./user_session');
 let TripDAO = require('./trip_dao');
 
 class TripService {
+  constructor(tripDAO) {
+    this.tripDAO = tripDAO || TripDAO;
+  }
+
   getTripsByUser(user) {
     let tripList = [];
     let loggedUser = this.getUserSession();
@@ -18,7 +22,7 @@ class TripService {
         }
       }
       if (isFriend) {
-        tripList = TripDAO.findTripsByUser(user);
+        tripList = this.tripDAO.findTripsByUser(user);
       }
       return tripList;
     } else {
