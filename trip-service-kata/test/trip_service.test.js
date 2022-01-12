@@ -1,9 +1,12 @@
-let TripService = require("../src/trip_service");
+let TripService = require('../src/trip_service');
+const User = require('../src/user');
 
-describe("TripService", () => {
-  it("change_this_name", () => {
+describe('TripService', () => {
+  it.skip('Should throw error when user is not logged in', () => {
     const tripService = new TripService();
-
-    expect(true).toBe(true);
+    const user = new User();
+    expect(() => {
+      tripService.getTripsByUser(user);
+    }).toThrowError('User not logged in.');
   });
 });
