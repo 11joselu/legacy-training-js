@@ -1,4 +1,5 @@
 const Forecast = require('../src/forecast');
+const fixtures = require('./fixtures');
 
 describe('Forecast should', function () {
   let originalTimeout;
@@ -8,20 +9,48 @@ describe('Forecast should', function () {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
   });
 
-  it("retrieve today's weather", async () => {
+  it.only("retrieve today's weather", async () => {
     const forecast = new Forecast();
+    const error = null;
+    const res = {};
+    forecast.getCityId = jest.fn().mockImplementation((city, onSuccess) => {
+      const body = fixtures.MADRID_ID;
+
+      onSuccess(error, res, body);
+    });
+    forecast.getCityWeatherData = jest
+      .fn()
+      .mockImplementation((cityId, onSuccess) => {
+        const body = fixtures.MADRID_WEATHER;
+
+        onSuccess(error, res, body);
+      });
 
     const prediction = await forecast.predict('Madrid', null, false);
 
-    expect(prediction).toBe('Clear'); // I don't know how to test it
+    expect(prediction).toBe('Clear');
   });
 
-  it("retrieve today's Barcelona weather", async () => {
+  it.only("retrieve today's Barcelona weather", async () => {
     const forecast = new Forecast();
+    const error = null;
+    const res = {};
+    forecast.getCityId = jest.fn().mockImplementation((city, onSuccess) => {
+      const body = fixtures.BARCELONA_ID;
+
+      onSuccess(error, res, body);
+    });
+    forecast.getCityWeatherData = jest
+      .fn()
+      .mockImplementation((cityId, onSuccess) => {
+        const body = fixtures.BARCELONA_WEATHER;
+
+        onSuccess(error, res, body);
+      });
 
     const prediction = await forecast.predict('Barcelona', null, false);
 
-    expect(prediction).toBe('Showers');
+    expect(prediction).toBe('Heavy Cloud');
   });
 
   it("retrieve any day's weather", async () => {
