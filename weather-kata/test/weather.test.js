@@ -4,20 +4,8 @@ const fixtures = require('./fixtures');
 describe('Forecast should', function () {
   it("retrieve today's weather", async () => {
     const forecast = new Forecast();
-    const error = null;
-    const res = {};
-    forecast.getCityId = jest.fn().mockImplementation((city, onSuccess) => {
-      const body = fixtures.MADRID_ID;
-
-      onSuccess(error, res, body);
-    });
-    forecast.getCityWeatherData = jest
-      .fn()
-      .mockImplementation((cityId, onSuccess) => {
-        const body = fixtures.MADRID_WEATHER;
-
-        onSuccess(error, res, body);
-      });
+    forecast.getCityId = createMockForGetCityId();
+    forecast.getCityWeatherData = createMockForGetCityWeatherData();
 
     const prediction = await forecast.predict('Madrid', null, false);
 
@@ -26,20 +14,8 @@ describe('Forecast should', function () {
 
   it("retrieve today's Barcelona weather", async () => {
     const forecast = new Forecast();
-    const error = null;
-    const res = {};
-    forecast.getCityId = jest.fn().mockImplementation((city, onSuccess) => {
-      const body = fixtures.BARCELONA_ID;
-
-      onSuccess(error, res, body);
-    });
-    forecast.getCityWeatherData = jest
-      .fn()
-      .mockImplementation((cityId, onSuccess) => {
-        const body = fixtures.BARCELONA_WEATHER;
-
-        onSuccess(error, res, body);
-      });
+    forecast.getCityId = createMockForGetCityId();
+    forecast.getCityWeatherData = createMockForGetCityWeatherData();
 
     const prediction = await forecast.predict('Barcelona', null, false);
 
@@ -48,23 +24,11 @@ describe('Forecast should', function () {
 
   it("retrieve any day's weather", async () => {
     const forecast = new Forecast();
+    forecast.getCityId = createMockForGetCityId();
+    forecast.getCityWeatherData = createMockForGetCityWeatherData();
     let city = 'Madrid';
     let dayAfterTomorrow = new Date();
     dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
-    const error = null;
-    const res = {};
-    forecast.getCityId = jest.fn().mockImplementation((city, onSuccess) => {
-      const body = fixtures.MADRID_ID;
-
-      onSuccess(error, res, body);
-    });
-    forecast.getCityWeatherData = jest
-      .fn()
-      .mockImplementation((cityId, onSuccess) => {
-        const body = fixtures.MADRID_WEATHER;
-
-        onSuccess(error, res, body);
-      });
 
     const prediction = await forecast.predict(city, dayAfterTomorrow);
 
@@ -72,22 +36,10 @@ describe('Forecast should', function () {
   });
 
   it('retrieve the wind of any day', async () => {
-    const forecast = new Forecast();
     let city = 'Madrid';
-    const error = null;
-    const res = {};
-    forecast.getCityId = jest.fn().mockImplementation((city, onSuccess) => {
-      const body = fixtures.MADRID_ID;
-
-      onSuccess(error, res, body);
-    });
-    forecast.getCityWeatherData = jest
-      .fn()
-      .mockImplementation((cityId, onSuccess) => {
-        const body = fixtures.MADRID_WEATHER;
-
-        onSuccess(error, res, body);
-      });
+    const forecast = new Forecast();
+    forecast.getCityId = createMockForGetCityId();
+    forecast.getCityWeatherData = createMockForGetCityWeatherData();
 
     const prediction = await forecast.predict(city, null, true);
 
@@ -96,24 +48,39 @@ describe('Forecast should', function () {
 
   it('return empty string when requesting a forecast for more than 5 days', async () => {
     const forecast = new Forecast();
+    forecast.getCityId = createMockForGetCityId;
+    forecast.getCityWeatherData = createMockForGetCityWeatherData();
     let city = 'Madrid';
     let sixDaysForecast = new Date();
     sixDaysForecast.setDate(new Date().getDate() + 6);
-    forecast.getCityId = jest.fn().mockImplementation((city, onSuccess) => {
-      const body = fixtures.MADRID_ID;
-
-      onSuccess(error, res, body);
-    });
-    forecast.getCityWeatherData = jest
-      .fn()
-      .mockImplementation((cityId, onSuccess) => {
-        const body = fixtures.MADRID_WEATHER;
-
-        onSuccess(error, res, body);
-      });
 
     const prediction = await forecast.predict(city, sixDaysForecast);
 
     expect(prediction).toBe('');
   });
 });
+
+function createMockForGetCityId() {
+  return jest.fn().mockImplementation((city, onSuccess) => {
+    const error = null;
+    const res = {};
+    const body = city === 'Madrid' ? fixtures.MADRID_ID : fixtures.BARCELONA_ID;
+
+    onSuccess(error, res, body);
+  });
+}
+
+function createMockForGetCityWeatherData() {
+  const MADRID_ID = fixtures.MADRID_ID[0].woeid;
+
+  return jest.fn().mockImplementation((cityId, onSuccess) => {
+    const error = null;
+    const res = {};
+    const body =
+      cityId === MADRID_ID
+        ? fixtures.MADRID_WEATHER
+        : fixtures.BARCELONA_WEATHER;
+
+    onSuccess(error, res, body);
+  });
+}
