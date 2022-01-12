@@ -57,10 +57,6 @@ class Forecast {
       onSuccessLoad
     );
   }
-
-  _loadCityWeather(datetime, wind, resolve) {
-    return '';
-  }
 }
 
 module.exports = Forecast;
