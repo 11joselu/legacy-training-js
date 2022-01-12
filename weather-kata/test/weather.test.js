@@ -58,6 +58,20 @@ describe('Forecast should', function () {
     let city = 'Madrid';
     let dayAfterTomorrow = new Date();
     dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+    const error = null;
+    const res = {};
+    forecast.getCityId = jest.fn().mockImplementation((city, onSuccess) => {
+      const body = fixtures.MADRID_ID;
+
+      onSuccess(error, res, body);
+    });
+    forecast.getCityWeatherData = jest
+      .fn()
+      .mockImplementation((cityId, onSuccess) => {
+        const body = fixtures.MADRID_WEATHER;
+
+        onSuccess(error, res, body);
+      });
 
     const prediction = await forecast.predict(city, dayAfterTomorrow);
 
