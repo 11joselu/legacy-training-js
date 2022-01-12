@@ -1,12 +1,12 @@
-"use strict";
+'use strict';
 
-let UserSession = require("./user_session");
-let TripDAO = require("./trip_dao");
+let UserSession = require('./user_session');
+let TripDAO = require('./trip_dao');
 
 class TripService {
   getTripsByUser(user) {
     let tripList = [];
-    let loggedUser = UserSession.getLoggedUser();
+    let loggedUser = this.getUserSession();
     let isFriend = false;
     if (loggedUser != null) {
       let friends = user.getFriends();
@@ -22,8 +22,12 @@ class TripService {
       }
       return tripList;
     } else {
-      throw new Error("User not logged in.");
+      throw new Error('User not logged in.');
     }
+  }
+
+  getUserSession() {
+    return UserSession.getLoggedUser();
   }
 }
 
