@@ -78,12 +78,14 @@ function Game() {
     Game.log(players[currentPlayer] + ' is the current player');
     Game.log('They have rolled a ' + roll);
 
-    if (inPenaltyBox[currentPlayer]) {
-      if (roll % 2 != 0) {
+    if (this.isInPenaltyBox(inPenaltyBox, currentPlayer)) {
+      if (this.isGettingOutOfPenaltyBox(roll)) {
         isGettingOutOfPenaltyBox = true;
 
         Game.log(players[currentPlayer] + ' is getting out of the penalty box');
+
         places[currentPlayer] = places[currentPlayer] + roll;
+
         if (places[currentPlayer] > 11) {
           places[currentPlayer] = places[currentPlayer] - 12;
         }
@@ -184,6 +186,14 @@ Game.prototype.createRockQuestion = function (index) {
 
 Game.prototype.isPlayable = function (howManyPlayers) {
   return howManyPlayers >= 2;
+};
+
+Game.prototype.isInPenaltyBox = function (inPenaltyBox, currentPlayer) {
+  return inPenaltyBox[currentPlayer];
+};
+
+Game.prototype.isGettingOutOfPenaltyBox = function (roll) {
+  return roll % 2 != 0;
 };
 
 Game.log = function (message) {
