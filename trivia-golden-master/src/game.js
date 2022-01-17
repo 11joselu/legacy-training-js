@@ -18,6 +18,15 @@ function Game() {
     return !(purses[currentPlayer] == 6);
   };
 
+  var askQuestion = function () {
+    const category = currentCategory();
+
+    if (category == 'Pop') Game.log(popQuestions.shift());
+    if (category == 'Science') Game.log(scienceQuestions.shift());
+    if (category == 'Sports') Game.log(sportsQuestions.shift());
+    if (category == 'Rock') Game.log(rockQuestions.shift());
+  };
+
   var currentCategory = function () {
     const place = places[currentPlayer];
 
@@ -63,15 +72,6 @@ function Game() {
 
   this.howManyPlayers = function () {
     return players.length;
-  };
-
-  var askQuestion = function () {
-    const category = currentCategory();
-
-    if (category == 'Pop') Game.log(popQuestions.shift());
-    if (category == 'Science') Game.log(scienceQuestions.shift());
-    if (category == 'Sports') Game.log(sportsQuestions.shift());
-    if (category == 'Rock') Game.log(rockQuestions.shift());
   };
 
   this.roll = function (roll) {
