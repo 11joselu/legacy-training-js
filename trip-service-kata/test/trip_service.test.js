@@ -1,5 +1,6 @@
 let TripService = require('../src/trip_service');
 const User = require('../src/user');
+const TestUser = require('./TestUser');
 
 describe('TripService', () => {
   it('Should throw error when user is not logged in', () => {
@@ -61,14 +62,3 @@ describe('TripService', () => {
     });
   });
 });
-
-class TestUser extends User {
-  constructor(friends = []) {
-    super();
-    this.friends = friends;
-  }
-
-  getFriends() {
-    return this.friends;
-  }
-}
