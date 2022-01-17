@@ -66,10 +66,12 @@ function Game() {
   };
 
   var askQuestion = function () {
-    if (currentCategory() == 'Pop') console.log(popQuestions.shift());
-    if (currentCategory() == 'Science') console.log(scienceQuestions.shift());
-    if (currentCategory() == 'Sports') console.log(sportsQuestions.shift());
-    if (currentCategory() == 'Rock') console.log(rockQuestions.shift());
+    const category = currentCategory();
+
+    if (category == 'Pop') console.log(popQuestions.shift());
+    if (category == 'Science') console.log(scienceQuestions.shift());
+    if (category == 'Sports') console.log(sportsQuestions.shift());
+    if (category == 'Rock') console.log(rockQuestions.shift());
   };
 
   this.roll = function (roll) {
