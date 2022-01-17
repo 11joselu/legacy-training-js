@@ -49,9 +49,9 @@ function Game() {
   };
 
   for (var i = 0; i < 50; i++) {
-    popQuestions.push('Pop Question ' + i);
-    scienceQuestions.push('Science Question ' + i);
-    sportsQuestions.push('Sports Question ' + i);
+    popQuestions.push(this.createPopQuestion(i));
+    scienceQuestions.push(this.createScienceQuestion(i));
+    sportsQuestions.push(this.createSportQuestion(i));
     rockQuestions.push(this.createRockQuestion(i));
   }
 
@@ -165,6 +165,18 @@ function Game() {
     return true;
   };
 }
+
+Game.prototype.createPopQuestion = function (index) {
+  return 'Pop Question ' + index;
+};
+
+Game.prototype.createScienceQuestion = function (index) {
+  return 'Science Question ' + index;
+};
+
+Game.prototype.createSportQuestion = function (index) {
+  return 'Sports Question ' + index;
+};
 
 Game.prototype.createRockQuestion = function (index) {
   return 'Rock Question ' + index;
