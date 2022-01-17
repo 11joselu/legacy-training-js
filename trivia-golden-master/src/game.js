@@ -39,20 +39,12 @@ function Game() {
     }
   };
 
-  this.createRockQuestion = function (index) {
-    return 'Rock Question ' + index;
-  };
-
   for (var i = 0; i < 50; i++) {
     popQuestions.push('Pop Question ' + i);
     scienceQuestions.push('Science Question ' + i);
     sportsQuestions.push('Sports Question ' + i);
     rockQuestions.push(this.createRockQuestion(i));
   }
-
-  this.isPlayable = function (howManyPlayers) {
-    return howManyPlayers >= 2;
-  };
 
   this.add = function (playerName) {
     players.push(playerName);
@@ -173,5 +165,13 @@ function Game() {
     return true;
   };
 }
+
+Game.prototype.createRockQuestion = function (index) {
+  return 'Rock Question ' + index;
+};
+
+Game.prototype.isPlayable = function (howManyPlayers) {
+  return howManyPlayers >= 2;
+};
 
 module.exports = Game;
