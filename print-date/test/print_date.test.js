@@ -1,27 +1,32 @@
-const assert = require("assert");
-const sinon = require("sinon");
+const assert = require('assert');
+const sinon = require('sinon');
 
-const PrintDate = require("../src/print_date");
-const Calendar = require("../src/calendar");
-const Printer = require("../src/printer");
+const PrintDate = require('../src/print_date');
+const Calendar = require('../src/calendar');
+const Printer = require('../src/printer');
 
-describe("PrintDate", function () {
-  it("change_this_name", function () {
-    let printDate = new PrintDate(new Calendar(), new Printer());
+describe('PrintDate', function () {
+  it('Should print today date with sinon', function () {
+    const today = new Date();
+    const printer = new Printer();
+    const printLineSpy = sinon.spy(printer, 'printLine');
+    const calendar = sinon.createStubInstance(Calendar, {
+      today: today,
+    });
+    const printDate = new PrintDate(calendar, printer);
 
     printDate.printCurrentDate();
 
-    // I don't know how to test it
+    assert(printLineSpy.calledWith(today));
   });
 
-  it("example using test doubles with Sinon", function()
-  {
-      let calendar = new Calendar();
-      let spy = sinon.spy(calendar, "today");
-      let printDate = new PrintDate(calendar, new Printer());
-  
-      printDate.printCurrentDate();
-  
-      assert(spy.calledOnce);
+  it('example using test doubles with Sinon', function () {
+    let calendar = new Calendar();
+    let spy = sinon.spy(calendar, 'today');
+    let printDate = new PrintDate(calendar, new Printer());
+
+    printDate.printCurrentDate();
+
+    assert(spy.calledOnce);
   });
 });
