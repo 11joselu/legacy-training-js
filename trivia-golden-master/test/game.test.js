@@ -5,16 +5,14 @@ let content = [];
 let numberOfCalls = 0;
 
 describe('Game', () => {
-  const oldConsoleLog = console.log;
   const oldMathRandom = Math.random;
 
   beforeEach(() => {
-    console.log = saveGameOutput;
+    Game.log = saveGameOutput;
     Math.random = mockRandom;
   });
 
   afterEach(() => {
-    console.log = oldConsoleLog;
     Math.random = oldMathRandom;
   });
 

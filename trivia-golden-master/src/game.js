@@ -55,8 +55,8 @@ function Game() {
     purses[playerIndex] = 0;
     inPenaltyBox[playerIndex] = false;
 
-    console.log(playerName + ' was added');
-    console.log('They are player number ' + players.length);
+    Game.log(playerName + ' was added');
+    Game.log('They are player number ' + players.length);
 
     return true;
   };
@@ -68,35 +68,33 @@ function Game() {
   var askQuestion = function () {
     const category = currentCategory();
 
-    if (category == 'Pop') console.log(popQuestions.shift());
-    if (category == 'Science') console.log(scienceQuestions.shift());
-    if (category == 'Sports') console.log(sportsQuestions.shift());
-    if (category == 'Rock') console.log(rockQuestions.shift());
+    if (category == 'Pop') Game.log(popQuestions.shift());
+    if (category == 'Science') Game.log(scienceQuestions.shift());
+    if (category == 'Sports') Game.log(sportsQuestions.shift());
+    if (category == 'Rock') Game.log(rockQuestions.shift());
   };
 
   this.roll = function (roll) {
-    console.log(players[currentPlayer] + ' is the current player');
-    console.log('They have rolled a ' + roll);
+    Game.log(players[currentPlayer] + ' is the current player');
+    Game.log('They have rolled a ' + roll);
 
     if (inPenaltyBox[currentPlayer]) {
       if (roll % 2 != 0) {
         isGettingOutOfPenaltyBox = true;
 
-        console.log(
-          players[currentPlayer] + ' is getting out of the penalty box'
-        );
+        Game.log(players[currentPlayer] + ' is getting out of the penalty box');
         places[currentPlayer] = places[currentPlayer] + roll;
         if (places[currentPlayer] > 11) {
           places[currentPlayer] = places[currentPlayer] - 12;
         }
 
-        console.log(
+        Game.log(
           players[currentPlayer] + "'s new location is " + places[currentPlayer]
         );
-        console.log('The category is ' + currentCategory());
+        Game.log('The category is ' + currentCategory());
         askQuestion();
       } else {
-        console.log(
+        Game.log(
           players[currentPlayer] + ' is not getting out of the penalty box'
         );
         isGettingOutOfPenaltyBox = false;
@@ -107,10 +105,10 @@ function Game() {
         places[currentPlayer] = places[currentPlayer] - 12;
       }
 
-      console.log(
+      Game.log(
         players[currentPlayer] + "'s new location is " + places[currentPlayer]
       );
-      console.log('The category is ' + currentCategory());
+      Game.log('The category is ' + currentCategory());
       askQuestion();
     }
   };
@@ -118,9 +116,9 @@ function Game() {
   this.wasCorrectlyAnswered = function () {
     if (inPenaltyBox[currentPlayer]) {
       if (isGettingOutOfPenaltyBox) {
-        console.log('Answer was correct!!!!');
+        Game.log('Answer was correct!!!!');
         purses[currentPlayer] += 1;
-        console.log(
+        Game.log(
           players[currentPlayer] +
             ' now has ' +
             purses[currentPlayer] +
@@ -138,10 +136,10 @@ function Game() {
         return true;
       }
     } else {
-      console.log('Answer was correct!!!!');
+      Game.log('Answer was correct!!!!');
 
       purses[currentPlayer] += 1;
-      console.log(
+      Game.log(
         players[currentPlayer] +
           ' now has ' +
           purses[currentPlayer] +
@@ -158,8 +156,8 @@ function Game() {
   };
 
   this.wrongAnswer = function () {
-    console.log('Question was incorrectly answered');
-    console.log(players[currentPlayer] + ' was sent to the penalty box');
+    Game.log('Question was incorrectly answered');
+    Game.log(players[currentPlayer] + ' was sent to the penalty box');
     inPenaltyBox[currentPlayer] = true;
 
     currentPlayer += 1;
@@ -174,6 +172,10 @@ Game.prototype.createRockQuestion = function (index) {
 
 Game.prototype.isPlayable = function (howManyPlayers) {
   return howManyPlayers >= 2;
+};
+
+Game.log = function (message) {
+  console.log(message);
 };
 
 module.exports = Game;
