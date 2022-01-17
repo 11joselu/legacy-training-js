@@ -56,9 +56,12 @@ function Game() {
 
   this.add = function (playerName) {
     players.push(playerName);
-    places[this.howManyPlayers() - 1] = 0;
-    purses[this.howManyPlayers() - 1] = 0;
-    inPenaltyBox[this.howManyPlayers() - 1] = false;
+
+    const playerIndex = this.howManyPlayers() - 1;
+
+    places[playerIndex] = 0;
+    purses[playerIndex] = 0;
+    inPenaltyBox[playerIndex] = false;
 
     console.log(playerName + ' was added');
     console.log('They are player number ' + players.length);
