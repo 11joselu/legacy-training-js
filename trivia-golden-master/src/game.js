@@ -1,30 +1,30 @@
 exports = typeof window !== 'undefined' && window !== null ? window : global;
 
 function Game() {
-  var players = new Array();
+  var players = [];
   var places = new Array(6);
   var purses = new Array(6);
   var inPenaltyBox = new Array(6);
 
-  var popQuestions = new Array();
-  var scienceQuestions = new Array();
-  var sportsQuestions = new Array();
-  var rockQuestions = new Array();
+  var popQuestions = [];
+  var scienceQuestions = [];
+  var sportsQuestions = [];
+  var rockQuestions = [];
 
   var currentPlayer = 0;
   var isGettingOutOfPenaltyBox = false;
 
   var didPlayerWin = function () {
-    return !(purses[currentPlayer] == 6);
+    return !(purses[currentPlayer] === 6);
   };
 
   var askQuestion = function () {
     const category = currentCategory();
 
-    if (category == 'Pop') Game.log(popQuestions.shift());
-    if (category == 'Science') Game.log(scienceQuestions.shift());
-    if (category == 'Sports') Game.log(sportsQuestions.shift());
-    if (category == 'Rock') Game.log(rockQuestions.shift());
+    if (category === 'Pop') Game.log(popQuestions.shift());
+    if (category === 'Science') Game.log(scienceQuestions.shift());
+    if (category === 'Sports') Game.log(sportsQuestions.shift());
+    if (category === 'Rock') Game.log(rockQuestions.shift());
   };
 
   var currentCategory = function () {
@@ -49,7 +49,7 @@ function Game() {
   };
 
   var didLastPlayerAlreadyPlay = function () {
-    return currentPlayer == players.length;
+    return currentPlayer === players.length;
   };
 
   for (var i = 0; i < 50; i++) {
@@ -58,7 +58,6 @@ function Game() {
     sportsQuestions.push(this.createSportQuestion(i));
     rockQuestions.push(this.createRockQuestion(i));
   }
-
   this.add = function (playerName) {
     players.push(playerName);
 
@@ -73,6 +72,30 @@ function Game() {
 
     return true;
   };
+
+  function thereAreNotPlacesToPlay() {
+    return places[currentPlayer] > 11;
+  }
+
+  function resetPlaces() {
+    places[currentPlayer] = places[currentPlayer] - 12;
+  }
+
+  function logLocationAndCategory() {
+    Game.log(
+        players[currentPlayer] + "'s new location is " + places[currentPlayer]
+    );
+    Game.log('The category is ' + currentCategory());
+  }
+
+  function logCurrentPlayerCoins() {
+    Game.log(
+        players[currentPlayer] +
+        ' now has ' +
+        purses[currentPlayer] +
+        ' Gold Coins.'
+    );
+  }
 
   this.howManyPlayers = function () {
     return players.length;
@@ -90,14 +113,11 @@ function Game() {
 
         places[currentPlayer] = places[currentPlayer] + roll;
 
-        if (places[currentPlayer] > 11) {
-          places[currentPlayer] = places[currentPlayer] - 12;
+        if (thereAreNotPlacesToPlay()) {
+          resetPlaces();
         }
 
-        Game.log(
-          players[currentPlayer] + "'s new location is " + places[currentPlayer]
-        );
-        Game.log('The category is ' + currentCategory());
+        logLocationAndCategory();
         askQuestion();
       } else {
         Game.log(
@@ -108,17 +128,16 @@ function Game() {
     } else {
       places[currentPlayer] = places[currentPlayer] + roll;
 
-      if (places[currentPlayer] > 11) {
-        places[currentPlayer] = places[currentPlayer] - 12;
+      if (thereAreNotPlacesToPlay()) {
+        resetPlaces();
       }
 
-      Game.log(
-        players[currentPlayer] + "'s new location is " + places[currentPlayer]
-      );
-      Game.log('The category is ' + currentCategory());
+      logLocationAndCategory();
       askQuestion();
     }
   };
+
+
 
   this.wasCorrectlyAnswered = function () {
     if (this.isInPenaltyBox(inPenaltyBox, currentPlayer)) {
@@ -126,12 +145,7 @@ function Game() {
         this.logAsnwerWasCorrect();
 
         purses[currentPlayer] += 1;
-        Game.log(
-          players[currentPlayer] +
-            ' now has ' +
-            purses[currentPlayer] +
-            ' Gold Coins.'
-        );
+        logCurrentPlayerCoins();
 
         var winner = didPlayerWin();
         currentPlayer += 1;
@@ -147,12 +161,7 @@ function Game() {
       this.logAsnwerWasCorrect();
 
       purses[currentPlayer] += 1;
-      Game.log(
-        players[currentPlayer] +
-          ' now has ' +
-          purses[currentPlayer] +
-          ' Gold Coins.'
-      );
+      logCurrentPlayerCoins();
 
       var winner = didPlayerWin();
 
@@ -199,7 +208,7 @@ Game.prototype.isInPenaltyBox = function (inPenaltyBox, currentPlayer) {
 };
 
 Game.prototype.isGettingOutOfPenaltyBox = function (roll) {
-  return roll % 2 != 0;
+  return roll % 2 !== 0;
 };
 
 Game.prototype.logAsnwerWasCorrect = function () {
