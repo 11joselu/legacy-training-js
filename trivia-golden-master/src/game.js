@@ -48,6 +48,10 @@ function Game() {
     }
   };
 
+  var didLastPlayerAlreadyPlay = function () {
+    return currentPlayer == players.length;
+  };
+
   for (var i = 0; i < 50; i++) {
     popQuestions.push(this.createPopQuestion(i));
     scienceQuestions.push(this.createScienceQuestion(i));
@@ -103,6 +107,7 @@ function Game() {
       }
     } else {
       places[currentPlayer] = places[currentPlayer] + roll;
+
       if (places[currentPlayer] > 11) {
         places[currentPlayer] = places[currentPlayer] - 12;
       }
@@ -116,9 +121,10 @@ function Game() {
   };
 
   this.wasCorrectlyAnswered = function () {
-    if (inPenaltyBox[currentPlayer]) {
+    if (this.isInPenaltyBox(inPenaltyBox, currentPlayer)) {
       if (isGettingOutOfPenaltyBox) {
-        Game.log('Answer was correct!!!!');
+        this.logAsnwerWasCorrect();
+
         purses[currentPlayer] += 1;
         Game.log(
           players[currentPlayer] +
@@ -129,16 +135,16 @@ function Game() {
 
         var winner = didPlayerWin();
         currentPlayer += 1;
-        if (currentPlayer == players.length) currentPlayer = 0;
+        if (didLastPlayerAlreadyPlay()) currentPlayer = 0;
 
         return winner;
       } else {
         currentPlayer += 1;
-        if (currentPlayer == players.length) currentPlayer = 0;
+        if (didLastPlayerAlreadyPlay()) currentPlayer = 0;
         return true;
       }
     } else {
-      Game.log('Answer was correct!!!!');
+      this.logAsnwerWasCorrect();
 
       purses[currentPlayer] += 1;
       Game.log(
@@ -151,7 +157,7 @@ function Game() {
       var winner = didPlayerWin();
 
       currentPlayer += 1;
-      if (currentPlayer == players.length) currentPlayer = 0;
+      if (didLastPlayerAlreadyPlay()) currentPlayer = 0;
 
       return winner;
     }
@@ -163,7 +169,7 @@ function Game() {
     inPenaltyBox[currentPlayer] = true;
 
     currentPlayer += 1;
-    if (currentPlayer == players.length) currentPlayer = 0;
+    if (didLastPlayerAlreadyPlay()) currentPlayer = 0;
     return true;
   };
 }
@@ -194,6 +200,10 @@ Game.prototype.isInPenaltyBox = function (inPenaltyBox, currentPlayer) {
 
 Game.prototype.isGettingOutOfPenaltyBox = function (roll) {
   return roll % 2 != 0;
+};
+
+Game.prototype.logAsnwerWasCorrect = function () {
+  Game.log('Answer was correct!!!!');
 };
 
 Game.log = function (message) {
