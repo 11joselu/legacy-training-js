@@ -2,7 +2,6 @@ const { readFileSync } = require('fs');
 let Game = require('../src/game');
 
 let content = [];
-let numberOfCalls = 0;
 
 describe('Game', () => {
   const oldMathRandom = Math.random;
@@ -31,6 +30,7 @@ function saveGameOutput(output) {
   content.push(output);
 }
 
+let numberOfCalls = 0;
 function mockRandom() {
   const numbers = [
     49, 32, 14, 71, 68, 16, 36, 85, 52, 50, 76, 18, 95, 39, 3, 77, 2, 84, 59,
